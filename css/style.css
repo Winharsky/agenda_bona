@@ -1,0 +1,192 @@
+/* =====================================================
+   style.css — identidade visual da barbearia
+   O Bootstrap cuida do layout (grid, menu, modais);
+   aqui ficam as cores, fontes e detalhes próprios.
+   ===================================================== */
+
+
+/* ---------- 1. Cores e fontes (variáveis) ---------- */
+:root {
+  --fundo: #f4ede1;         /* creme */
+  --branco: #fffaf2;        /* fundo dos cartões */
+  --escuro: #1f1b17;        /* carvão (menu e textos) */
+  --texto-suave: #6b6157;
+  --borda: #e6dccb;
+  --cobre: #b5562b;         /* cor de destaque */
+  --cobre-escuro: #8f4120;
+
+  --fonte-titulo: "Alfa Slab One", Georgia, serif;  /* estilo letreiro de barbearia */
+  --fonte-texto: "Barlow", Arial, sans-serif;
+
+  --raio: 16px;
+}
+
+
+/* ---------- 2. Base ---------- */
+body {
+  background-color: var(--fundo);
+  color: var(--escuro);
+  font-family: var(--fonte-texto);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.titulo {
+  font-family: var(--fonte-titulo);
+  font-weight: 400; /* a Alfa Slab One já é grossa */
+  font-size: 1.9rem;
+  margin: 0;
+}
+
+
+/* ---------- 3. Menu ---------- */
+.menu {
+  background-color: var(--escuro);
+  padding: 0.8rem 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--fonte-titulo);
+  font-size: 1.35rem;
+  letter-spacing: 0.01em;
+}
+
+.logo-icone {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--cobre);
+  font-size: 1.1rem;
+}
+
+.logo-destaque {
+  color: var(--cobre);
+}
+
+.menu .nav-link {
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 0.5rem 0.9rem !important;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.menu .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.menu .nav-link.active {
+  background-color: var(--cobre);
+  color: #fff;
+}
+
+
+/* ---------- 4. Botões ---------- */
+.btn-cobre {
+  background-color: var(--cobre);
+  border-color: var(--cobre);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+.btn-cobre:hover,
+.btn-cobre:focus {
+  background-color: var(--cobre-escuro);
+  border-color: var(--cobre-escuro);
+  color: #fff;
+}
+
+
+/* ---------- 5. Tela Início ---------- */
+.banner {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--escuro);
+  color: var(--branco);
+  border-radius: var(--raio);
+  padding: 3rem 2.5rem;
+}
+
+.banner-titulo {
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.banner-texto {
+  color: rgba(255, 250, 242, 0.7);
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Tesoura grande e transparente no fundo do banner */
+.banner-icone {
+  position: absolute;
+  right: -20px;
+  bottom: -40px;
+  font-size: 14rem;
+  color: var(--cobre);
+  opacity: 0.18;
+  transform: rotate(-20deg);
+}
+
+
+/* ---------- 6. Outras telas ---------- */
+.cabecalho {
+  margin-bottom: 1.5rem;
+}
+
+/* Aviso de tela ainda vazia */
+.vazio {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--texto-suave);
+  background-color: var(--branco);
+  border: 1px dashed var(--borda);
+  border-radius: var(--raio);
+}
+
+.vazio i {
+  font-size: 2.5rem;
+  color: var(--cobre);
+}
+
+.vazio p {
+  margin: 0.75rem 0 0;
+}
+
+
+/* ---------- 7. Rodapé ---------- */
+.rodape {
+  padding: 1.5rem 0;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--borda);
+}
+
+
+/* ---------- 8. Celular ---------- */
+@media (max-width: 576px) {
+  .banner {
+    padding: 2rem 1.5rem;
+  }
+
+  .titulo {
+    font-size: 1.6rem;
+  }
+}
