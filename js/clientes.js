@@ -52,7 +52,7 @@ function validarCliente(cliente, clientes) {
     if (numeros.length < 10 || numeros.length > 11) {
         erros.push('O telefone precisa ter DDD + número (10 ou 11 dígitos).');
     }
-    if (cliente.email !== '' && !cliente.email.includes('@')) {
+    if (cliente.email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cliente.email)) {
         erros.push('E-mail inválido.');
     }
 
