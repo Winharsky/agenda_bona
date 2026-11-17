@@ -33,8 +33,21 @@ function listarAgendamentos() {
                 <td>${escapar(profissional ? profissional.nome : '(excluído)')}</td>
                 <td>${formatarDinheiro(agendamento.valor)}</td>
                 <td><span class="badge ${CORES_STATUS[agendamento.status]}">${agendamento.status}</span></td>
+                <td class="acoes">${botoesDoAgendamento(agendamento)}</td>
             </tr>`;
     }).join('');
+}
+
+function botoesDoAgendamento(agendamento) {
+    const id = agendamento.id;
+    let botoes = '';
+
+    if (agendamentoEmAberto(agendamento)) {
+        botoes += `<button class="btn btn-sm btn-outline-secondary" onclick="editarAgendamento('${id}')">Editar</button> `;
+    }
+    botoes += `<button class="btn btn-sm btn-outline-danger" onclick="excluirAgendamento('${id}')">Excluir</button>`;
+
+    return botoes;
 }
 
 function preencherSelect(idSelect, lista, textoInicial) {
@@ -65,6 +78,21 @@ function novoAgendamento() {
     document.getElementById('agendamentoId').value = '';
     document.getElementById('agendamentoData').min = dataDeHoje();
     document.getElementById('tituloModalAgendamento').textContent = 'Novo agendamento';
+    esconderErros('erroAgendamento');
+    abrirModal('modalAgendamento');
+}
+
+function editarAgendamento(id) {
+    const agendamento = buscarPorId(lerDados(CHAVE_AGENDAMENTOS), id);
+
+    carregarOpcoes();
+    document.getElementById('agendamentoId').value = agendamento.id;
+    document.getElementById('agendamentoCliente').value = agendamento.clienteId;
+    document.getElementById('agendamentoServico').value = agendamento.servicoId;
+    document.getElementById('agendamentoProfissional').value = agendamento.profissionalId;
+    document.getElementById('agendamentoData').value = agendamento.data;
+    document.getElementById('agendamentoHora').value = agendamento.hora;
+    document.getElementById('tituloModalAgendamento').textContent = 'Editar agendamento';
     esconderErros('erroAgendamento');
     abrirModal('modalAgendamento');
 }
@@ -128,3 +156,12 @@ document.getElementById('formAgendamento').addEventListener('submit', (evento) =
     atualizarTela();
     mostrarAviso('Agendamento salvo.', 'sucesso');
 });
+
+function excluirAgendamento(id) {
+    confirmarExclusao('Deseja mesmo excluir este agendamento?', () => {
+        const agendamentos = lerDados(CHAVE_AGENDAMENTOS).filter(a => a.id !== id);
+        salvarDados(CHAVE_AGENDAMENTOS, agendamentos);
+        atualizarTela();
+        mostrarAviso('Agendamento excluído.', 'sucesso');
+    });
+}
