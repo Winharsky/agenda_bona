@@ -8,14 +8,21 @@ const CORES_STATUS = {
 };
 
 function listarAgendamentos() {
-    const agendamentos = lerDados(CHAVE_AGENDAMENTOS);
+    const todos = lerDados(CHAVE_AGENDAMENTOS);
     const clientes = lerDados(CHAVE_CLIENTES);
     const servicos = lerDados(CHAVE_SERVICOS);
     const profissionais = lerDados(CHAVE_PROFISSIONAIS);
     const tabela = document.getElementById('listaAgendamentos');
 
-    if (agendamentos.length === 0) {
+    if (todos.length === 0) {
         tabela.innerHTML = linhaVazia(8, 'Nenhum agendamento cadastrado.');
+        return;
+    }
+
+    const agendamentos = filtrarAgendamentos(todos, clientes);
+
+    if (agendamentos.length === 0) {
+        tabela.innerHTML = linhaVazia(8, 'Nenhum agendamento encontrado para essa busca.');
         return;
     }
 
@@ -36,6 +43,16 @@ function listarAgendamentos() {
                 <td class="acoes">${botoesDoAgendamento(agendamento)}</td>
             </tr>`;
     }).join('');
+}
+
+function filtrarAgendamentos(agendamentos, clientes) {
+    const busca = document.getElementById('buscaCliente').value.trim().toLowerCase();
+
+    return agendamentos.filter(a => {
+        const cliente = buscarPorId(clientes, a.clienteId);
+        const nome = cliente ? cliente.nome.toLowerCase() : '';
+        return nome.includes(busca);
+    });
 }
 
 function botoesDoAgendamento(agendamento) {
@@ -187,3 +204,5 @@ function excluirAgendamento(id) {
         mostrarAviso('Agendamento excluído.', 'sucesso');
     });
 }
+
+document.getElementById('buscaCliente').addEventListener('input', listarAgendamentos);
