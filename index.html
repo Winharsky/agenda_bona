@@ -90,8 +90,16 @@
         <section id="profissionais" class="secao d-none">
             <div class="cabecalho">
                 <h1 class="titulo">Profissionais</h1>
+                <button class="btn btn-primaria" onclick="novoProfissional()"><i class="bi bi-plus-lg"></i> Novo profissional</button>
             </div>
-            <p class="vazio">Em construção.</p>
+            <div class="table-responsive">
+                <table class="table tabela align-middle">
+                    <thead>
+                        <tr><th>Nome</th><th>Especialidade</th><th>Situação</th></tr>
+                    </thead>
+                    <tbody id="listaProfissionais"></tbody>
+                </table>
+            </div>
         </section>
 
     </main>
@@ -167,6 +175,37 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalProfissional" tabindex="-1" aria-labelledby="tituloModalProfissional" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" id="formProfissional" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloModalProfissional">Profissional</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger d-none" id="erroProfissional"></div>
+                    <input type="hidden" id="profissionalId">
+                    <div class="mb-3">
+                        <label for="profissionalNome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="profissionalNome">
+                    </div>
+                    <div class="mb-3">
+                        <label for="profissionalEspecialidade" class="form-label">Especialidade</label>
+                        <input type="text" class="form-control" id="profissionalEspecialidade">
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="profissionalAtivo" checked>
+                        <label class="form-check-label" for="profissionalAtivo">Atendendo (aparece na hora de agendar)</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primaria">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="tituloModalExcluir" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -188,6 +227,7 @@
     <script src="js/utils.js"></script>
     <script src="js/clientes.js"></script>
     <script src="js/servicos.js"></script>
+    <script src="js/profissionais.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
