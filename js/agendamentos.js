@@ -8,14 +8,23 @@ const CORES_STATUS = {
 };
 
 function listarAgendamentos() {
-    const agendamentos = lerDados(CHAVE_AGENDAMENTOS);
+    const todos = lerDados(CHAVE_AGENDAMENTOS);
     const clientes = lerDados(CHAVE_CLIENTES);
     const servicos = lerDados(CHAVE_SERVICOS);
     const profissionais = lerDados(CHAVE_PROFISSIONAIS);
     const tabela = document.getElementById('listaAgendamentos');
 
-    if (agendamentos.length === 0) {
+    preencherFiltroProfissional(profissionais);
+
+    if (todos.length === 0) {
         tabela.innerHTML = linhaVazia(8, 'Nenhum agendamento cadastrado.');
+        return;
+    }
+
+    const agendamentos = filtrarAgendamentos(todos, clientes);
+
+    if (agendamentos.length === 0) {
+        tabela.innerHTML = linhaVazia(8, 'Nenhum agendamento encontrado com esses filtros.');
         return;
     }
 
@@ -36,6 +45,39 @@ function listarAgendamentos() {
                 <td class="acoes">${botoesDoAgendamento(agendamento)}</td>
             </tr>`;
     }).join('');
+}
+
+function filtrarAgendamentos(agendamentos, clientes) {
+    const busca = document.getElementById('buscaCliente').value.trim().toLowerCase();
+    const status = document.getElementById('filtroStatus').value;
+    const profissionalId = document.getElementById('filtroProfissional').value;
+    const ordem = document.getElementById('ordenacao').value;
+
+    const resultado = agendamentos.filter(a => {
+        const cliente = buscarPorId(clientes, a.clienteId);
+        const nome = cliente ? cliente.nome.toLowerCase() : '';
+
+        return nome.includes(busca)
+            && (status === '' || a.status === status)
+            && (profissionalId === '' || a.profissionalId === profissionalId);
+    });
+
+    resultado.sort((a, b) => {
+        if (ordem === 'valor') {
+            return b.valor - a.valor;
+        }
+        const comparacao = (a.data + a.hora).localeCompare(b.data + b.hora);
+        return ordem === 'recentes' ? -comparacao : comparacao;
+    });
+
+    return resultado;
+}
+
+function preencherFiltroProfissional(profissionais) {
+    const select = document.getElementById('filtroProfissional');
+    const selecionado = select.value;
+    preencherSelect('filtroProfissional', profissionais, 'Todos os profissionais');
+    select.value = selecionado;
 }
 
 function botoesDoAgendamento(agendamento) {
@@ -123,7 +165,11 @@ function validarAgendamento(agendamento) {
         erros.push('A barbearia funciona das 08:00 às 19:00.');
     }
 
-    return erros;
+    if (erros.length > 0) {
+        return erros;
+    }
+
+    return verificarHorario(agendamento);
 }
 
 document.getElementById('formAgendamento').addEventListener('submit', (evento) => {
@@ -187,3 +233,7 @@ function excluirAgendamento(id) {
         mostrarAviso('Agendamento excluído.', 'sucesso');
     });
 }
+
+['buscaCliente', 'filtroStatus', 'filtroProfissional', 'ordenacao'].forEach(id => {
+    document.getElementById(id).addEventListener('input', listarAgendamentos);
+});
