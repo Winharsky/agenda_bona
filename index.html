@@ -100,6 +100,28 @@
                     <label for="buscaCliente" class="visually-hidden">Buscar cliente</label>
                     <input type="search" class="form-control" id="buscaCliente" placeholder="Buscar pelo nome do cliente">
                 </div>
+                <div class="col-6 col-md-3">
+                    <label for="filtroStatus" class="visually-hidden">Status</label>
+                    <select class="form-select" id="filtroStatus">
+                        <option value="">Todos os status</option>
+                        <option>Agendado</option>
+                        <option>Confirmado</option>
+                        <option>Concluído</option>
+                        <option>Cancelado</option>
+                    </select>
+                </div>
+                <div class="col-6 col-md-3">
+                    <label for="filtroProfissional" class="visually-hidden">Profissional</label>
+                    <select class="form-select" id="filtroProfissional"></select>
+                </div>
+                <div class="col-12 col-md-2">
+                    <label for="ordenacao" class="visually-hidden">Ordenar</label>
+                    <select class="form-select" id="ordenacao">
+                        <option value="antigos">Data: mais antigos</option>
+                        <option value="recentes">Data: mais recentes</option>
+                        <option value="valor">Maior valor</option>
+                    </select>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table tabela align-middle">
