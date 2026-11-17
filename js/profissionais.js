@@ -19,6 +19,10 @@ function listarProfissionais() {
                 <td>${escapar(profissional.nome)}</td>
                 <td>${escapar(profissional.especialidade)}</td>
                 <td>${situacao}</td>
+                <td class="acoes">
+                    <button class="btn btn-sm btn-outline-secondary" onclick="editarProfissional('${profissional.id}')">Editar</button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="excluirProfissional('${profissional.id}')">Excluir</button>
+                </td>
             </tr>`;
     }).join('');
 }
@@ -27,6 +31,18 @@ function novoProfissional() {
     document.getElementById('formProfissional').reset();
     document.getElementById('profissionalId').value = '';
     document.getElementById('tituloModalProfissional').textContent = 'Novo profissional';
+    esconderErros('erroProfissional');
+    abrirModal('modalProfissional');
+}
+
+function editarProfissional(id) {
+    const profissional = buscarPorId(lerDados(CHAVE_PROFISSIONAIS), id);
+
+    document.getElementById('profissionalId').value = profissional.id;
+    document.getElementById('profissionalNome').value = profissional.nome;
+    document.getElementById('profissionalEspecialidade').value = profissional.especialidade;
+    document.getElementById('profissionalAtivo').checked = profissional.ativo;
+    document.getElementById('tituloModalProfissional').textContent = 'Editar profissional';
     esconderErros('erroProfissional');
     abrirModal('modalProfissional');
 }
@@ -74,3 +90,12 @@ document.getElementById('formProfissional').addEventListener('submit', (evento) 
     atualizarTela();
     mostrarAviso('Profissional salvo.', 'sucesso');
 });
+
+function excluirProfissional(id) {
+    confirmarExclusao('Deseja mesmo excluir este profissional?', () => {
+        const profissionais = lerDados(CHAVE_PROFISSIONAIS).filter(p => p.id !== id);
+        salvarDados(CHAVE_PROFISSIONAIS, profissionais);
+        atualizarTela();
+        mostrarAviso('Profissional excluído.', 'sucesso');
+    });
+}
