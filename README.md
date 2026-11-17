@@ -8,9 +8,9 @@ Trabalho prático de Desenvolvimento Web I, Universidade do Contestado (UnC).
 
 | Nome | Responsabilidade |
 | --- | --- |
-| _Nome completo 1_ | _ex.: navegação, clientes, README_ |
-| _Nome completo 2_ | _ex.: serviços, profissionais, validações_ |
-| _Nome completo 3_ | _ex.: agendamentos, dashboard, funcionalidade exclusiva_ |
+| André Barbosa / Daniel Winharsky |: navegação, clientes, README_ |
+| André Barbosa / Daniel Winharsky |: serviços, profissionais, validações_ |
+| André Barbosa / Daniel Winharsky |: agendamentos, dashboard, funcionalidade exclusiva_ |
 
 ## Funcionalidades
 
