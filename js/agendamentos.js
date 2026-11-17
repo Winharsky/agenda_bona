@@ -42,7 +42,14 @@ function botoesDoAgendamento(agendamento) {
     const id = agendamento.id;
     let botoes = '';
 
+    if (agendamento.status === 'Agendado') {
+        botoes += `<button class="btn btn-sm btn-primary" onclick="mudarStatus('${id}', 'Confirmado')">Confirmar</button> `;
+    }
+    if (agendamento.status === 'Confirmado') {
+        botoes += `<button class="btn btn-sm btn-success" onclick="mudarStatus('${id}', 'Concluído')">Concluir</button> `;
+    }
     if (agendamentoEmAberto(agendamento)) {
+        botoes += `<button class="btn btn-sm btn-outline-warning" onclick="mudarStatus('${id}', 'Cancelado')">Cancelar</button> `;
         botoes += `<button class="btn btn-sm btn-outline-secondary" onclick="editarAgendamento('${id}')">Editar</button> `;
     }
     botoes += `<button class="btn btn-sm btn-outline-danger" onclick="excluirAgendamento('${id}')">Excluir</button>`;
@@ -156,6 +163,21 @@ document.getElementById('formAgendamento').addEventListener('submit', (evento) =
     atualizarTela();
     mostrarAviso('Agendamento salvo.', 'sucesso');
 });
+
+function mudarStatus(id, novoStatus) {
+    const agendamentos = lerDados(CHAVE_AGENDAMENTOS);
+    const agendamento = buscarPorId(agendamentos, id);
+
+    if (!agendamentoEmAberto(agendamento)) {
+        mostrarAviso('Agendamento concluído ou cancelado não pode mudar de status.', 'erro');
+        return;
+    }
+
+    agendamento.status = novoStatus;
+    salvarDados(CHAVE_AGENDAMENTOS, agendamentos);
+    atualizarTela();
+    mostrarAviso(`Agendamento ${novoStatus.toLowerCase()}.`, 'sucesso');
+}
 
 function excluirAgendamento(id) {
     confirmarExclusao('Deseja mesmo excluir este agendamento?', () => {
