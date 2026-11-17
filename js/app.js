@@ -19,3 +19,9 @@ links.forEach(link => {
         mostrarSecao(link.dataset.secao);
     });
 });
+
+function atualizarTela() {
+    listarClientes();
+}
+
+atualizarTela();

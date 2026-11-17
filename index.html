@@ -60,8 +60,16 @@
         <section id="clientes" class="secao d-none">
             <div class="cabecalho">
                 <h1 class="titulo">Clientes</h1>
+                <button class="btn btn-primaria" onclick="novoCliente()"><i class="bi bi-plus-lg"></i> Novo cliente</button>
             </div>
-            <p class="vazio">Em construção.</p>
+            <div class="table-responsive">
+                <table class="table tabela align-middle">
+                    <thead>
+                        <tr><th>Nome</th><th>Telefone</th><th>E-mail</th></tr>
+                    </thead>
+                    <tbody id="listaClientes"></tbody>
+                </table>
+            </div>
         </section>
 
         <section id="servicos" class="secao d-none">
@@ -87,8 +95,57 @@
         </div>
     </footer>
 
+    <div class="modal fade" id="modalCliente" tabindex="-1" aria-labelledby="tituloModalCliente" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" id="formCliente" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloModalCliente">Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger d-none" id="erroCliente"></div>
+                    <input type="hidden" id="clienteId">
+                    <div class="mb-3">
+                        <label for="clienteNome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="clienteNome">
+                    </div>
+                    <div class="mb-3">
+                        <label for="clienteTelefone" class="form-label">Telefone</label>
+                        <input type="tel" class="form-control" id="clienteTelefone" placeholder="(47) 99999-9999">
+                    </div>
+                    <div class="mb-3">
+                        <label for="clienteEmail" class="form-label">E-mail (opcional)</label>
+                        <input type="email" class="form-control" id="clienteEmail">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primaria">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="tituloModalExcluir" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloModalExcluir">Excluir</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body" id="textoExcluir"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="botaoConfirmarExclusao">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
                     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/clientes.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
