@@ -22,6 +22,7 @@ links.forEach(link => {
 
 function atualizarTela() {
     listarClientes();
+    listarServicos();
 }
 
 atualizarTela();
