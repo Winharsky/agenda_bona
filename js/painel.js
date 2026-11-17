@@ -20,4 +20,32 @@ function atualizarPainel() {
     document.getElementById('totalFaturamento').textContent = formatarDinheiro(faturamento);
     document.getElementById('totalClientes').textContent = clientes.length;
     document.getElementById('taxaCancelamento').textContent = `${taxa}%`;
+
+    listarProximos(agendamentos, hoje);
+}
+
+function listarProximos(agendamentos, hoje) {
+    const clientes = lerDados(CHAVE_CLIENTES);
+    const servicos = lerDados(CHAVE_SERVICOS);
+    const profissionais = lerDados(CHAVE_PROFISSIONAIS);
+    const tabela = document.getElementById('listaProximos');
+
+    const proximos = agendamentos
+        .filter(a => agendamentoEmAberto(a) && a.data >= hoje)
+        .sort((a, b) => (a.data + a.hora).localeCompare(b.data + b.hora))
+        .slice(0, 5);
+
+    if (proximos.length === 0) {
+        tabela.innerHTML = linhaVazia(4, 'Nenhum horário marcado.');
+        return;
+    }
+
+    tabela.innerHTML = proximos.map(a => `
+        <tr>
+            <td>${formatarData(a.data)} às ${a.hora}</td>
+            <td>${escapar(buscarPorId(clientes, a.clienteId).nome)}</td>
+            <td>${escapar(buscarPorId(servicos, a.servicoId).nome)}</td>
+            <td>${escapar(buscarPorId(profissionais, a.profissionalId).nome)}</td>
+        </tr>
+    `).join('');
 }
