@@ -14,6 +14,10 @@ function listarServicos() {
             <td>${escapar(servico.nome)}</td>
             <td>${formatarDinheiro(servico.preco)}</td>
             <td>${servico.duracao} min</td>
+            <td class="acoes">
+                <button class="btn btn-sm btn-outline-secondary" onclick="editarServico('${servico.id}')">Editar</button>
+                <button class="btn btn-sm btn-outline-danger" onclick="excluirServico('${servico.id}')">Excluir</button>
+            </td>
         </tr>
     `).join('');
 }
@@ -22,6 +26,18 @@ function novoServico() {
     document.getElementById('formServico').reset();
     document.getElementById('servicoId').value = '';
     document.getElementById('tituloModalServico').textContent = 'Novo serviço';
+    esconderErros('erroServico');
+    abrirModal('modalServico');
+}
+
+function editarServico(id) {
+    const servico = buscarPorId(lerDados(CHAVE_SERVICOS), id);
+
+    document.getElementById('servicoId').value = servico.id;
+    document.getElementById('servicoNome').value = servico.nome;
+    document.getElementById('servicoPreco').value = servico.preco;
+    document.getElementById('servicoDuracao').value = servico.duracao;
+    document.getElementById('tituloModalServico').textContent = 'Editar serviço';
     esconderErros('erroServico');
     abrirModal('modalServico');
 }
@@ -72,3 +88,12 @@ document.getElementById('formServico').addEventListener('submit', (evento) => {
     atualizarTela();
     mostrarAviso('Serviço salvo.', 'sucesso');
 });
+
+function excluirServico(id) {
+    confirmarExclusao('Deseja mesmo excluir este serviço?', () => {
+        const servicos = lerDados(CHAVE_SERVICOS).filter(s => s.id !== id);
+        salvarDados(CHAVE_SERVICOS, servicos);
+        atualizarTela();
+        mostrarAviso('Serviço excluído.', 'sucesso');
+    });
+}
