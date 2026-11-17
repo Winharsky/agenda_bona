@@ -14,6 +14,10 @@ function listarClientes() {
             <td>${escapar(cliente.nome)}</td>
             <td>${escapar(cliente.telefone)}</td>
             <td>${escapar(cliente.email || '-')}</td>
+            <td class="acoes">
+                <button class="btn btn-sm btn-outline-secondary" onclick="editarCliente('${cliente.id}')">Editar</button>
+                <button class="btn btn-sm btn-outline-danger" onclick="excluirCliente('${cliente.id}')">Excluir</button>
+            </td>
         </tr>
     `).join('');
 }
@@ -22,6 +26,18 @@ function novoCliente() {
     document.getElementById('formCliente').reset();
     document.getElementById('clienteId').value = '';
     document.getElementById('tituloModalCliente').textContent = 'Novo cliente';
+    esconderErros('erroCliente');
+    abrirModal('modalCliente');
+}
+
+function editarCliente(id) {
+    const cliente = buscarPorId(lerDados(CHAVE_CLIENTES), id);
+
+    document.getElementById('clienteId').value = cliente.id;
+    document.getElementById('clienteNome').value = cliente.nome;
+    document.getElementById('clienteTelefone').value = cliente.telefone;
+    document.getElementById('clienteEmail').value = cliente.email;
+    document.getElementById('tituloModalCliente').textContent = 'Editar cliente';
     esconderErros('erroCliente');
     abrirModal('modalCliente');
 }
@@ -80,3 +96,12 @@ document.getElementById('formCliente').addEventListener('submit', (evento) => {
     atualizarTela();
     mostrarAviso('Cliente salvo.', 'sucesso');
 });
+
+function excluirCliente(id) {
+    confirmarExclusao('Deseja mesmo excluir este cliente?', () => {
+        const clientes = lerDados(CHAVE_CLIENTES).filter(c => c.id !== id);
+        salvarDados(CHAVE_CLIENTES, clientes);
+        atualizarTela();
+        mostrarAviso('Cliente excluído.', 'sucesso');
+    });
+}
