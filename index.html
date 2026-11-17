@@ -75,8 +75,16 @@
         <section id="servicos" class="secao d-none">
             <div class="cabecalho">
                 <h1 class="titulo">Serviços</h1>
+                <button class="btn btn-primaria" onclick="novoServico()"><i class="bi bi-plus-lg"></i> Novo serviço</button>
             </div>
-            <p class="vazio">Em construção.</p>
+            <div class="table-responsive">
+                <table class="table tabela align-middle">
+                    <thead>
+                        <tr><th>Serviço</th><th>Preço</th><th>Duração</th></tr>
+                    </thead>
+                    <tbody id="listaServicos"></tbody>
+                </table>
+            </div>
         </section>
 
         <section id="profissionais" class="secao d-none">
@@ -126,6 +134,39 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalServico" tabindex="-1" aria-labelledby="tituloModalServico" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" id="formServico" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloModalServico">Serviço</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger d-none" id="erroServico"></div>
+                    <input type="hidden" id="servicoId">
+                    <div class="mb-3">
+                        <label for="servicoNome" class="form-label">Nome do serviço</label>
+                        <input type="text" class="form-control" id="servicoNome" placeholder="Corte, barba, sobrancelha...">
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="servicoPreco" class="form-label">Preço (R$)</label>
+                            <input type="number" class="form-control" id="servicoPreco" min="0" step="0.01">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="servicoDuracao" class="form-label">Duração (min)</label>
+                            <input type="number" class="form-control" id="servicoDuracao" min="10" step="5">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primaria">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="tituloModalExcluir" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -146,6 +187,7 @@
                     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="js/utils.js"></script>
     <script src="js/clientes.js"></script>
+    <script src="js/servicos.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
