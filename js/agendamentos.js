@@ -165,7 +165,11 @@ function validarAgendamento(agendamento) {
         erros.push('A barbearia funciona das 08:00 às 19:00.');
     }
 
-    return erros;
+    if (erros.length > 0) {
+        return erros;
+    }
+
+    return verificarHorario(agendamento);
 }
 
 document.getElementById('formAgendamento').addEventListener('submit', (evento) => {
