@@ -45,9 +45,39 @@
 
         <section id="inicio" class="secao">
             <div class="cabecalho">
-                <h1 class="titulo">Sua agenda</h1>
+                <div>
+                    <h1 class="titulo">Hoje</h1>
+                    <p class="data-hoje" id="dataHoje"></p>
+                </div>
+                <button class="btn btn-primaria" onclick="mostrarSecao('agendamentos'); novoAgendamento();"><i class="bi bi-plus-lg"></i> Novo agendamento</button>
             </div>
-            <p>Use o menu para cadastrar clientes, serviços, profissionais e agendamentos.</p>
+
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-lg-3">
+                    <div class="card indicador h-100 shadow-sm">
+                        <p class="indicador-nome">Agendamentos hoje</p>
+                        <p class="indicador-valor" id="totalHoje">0</p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="card indicador h-100 shadow-sm">
+                        <p class="indicador-nome">Faturamento do mês</p>
+                        <p class="indicador-valor" id="totalFaturamento">R$ 0,00</p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="card indicador h-100 shadow-sm">
+                        <p class="indicador-nome">Clientes</p>
+                        <p class="indicador-valor" id="totalClientes">0</p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="card indicador h-100 shadow-sm">
+                        <p class="indicador-nome">Cancelamentos</p>
+                        <p class="indicador-valor" id="taxaCancelamento">0%</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="agendamentos" class="secao d-none">
@@ -279,6 +309,7 @@
     <script src="js/servicos.js"></script>
     <script src="js/profissionais.js"></script>
     <script src="js/agendamentos.js"></script>
+    <script src="js/painel.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
