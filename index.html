@@ -53,8 +53,16 @@
         <section id="agendamentos" class="secao d-none">
             <div class="cabecalho">
                 <h1 class="titulo">Agendamentos</h1>
+                <button class="btn btn-primaria" onclick="novoAgendamento()"><i class="bi bi-plus-lg"></i> Novo agendamento</button>
             </div>
-            <p class="vazio">Em construção.</p>
+            <div class="table-responsive">
+                <table class="table tabela align-middle">
+                    <thead>
+                        <tr><th>Data</th><th>Hora</th><th>Cliente</th><th>Serviço</th><th>Profissional</th><th>Valor</th><th>Status</th><th></th></tr>
+                    </thead>
+                    <tbody id="listaAgendamentos"></tbody>
+                </table>
+            </div>
         </section>
 
         <section id="clientes" class="secao d-none">
@@ -206,6 +214,48 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalAgendamento" tabindex="-1" aria-labelledby="tituloModalAgendamento" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" id="formAgendamento" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloModalAgendamento">Agendamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger d-none" id="erroAgendamento"></div>
+                    <input type="hidden" id="agendamentoId">
+                    <div class="mb-3">
+                        <label for="agendamentoCliente" class="form-label">Cliente</label>
+                        <select class="form-select" id="agendamentoCliente"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="agendamentoServico" class="form-label">Serviço</label>
+                        <select class="form-select" id="agendamentoServico"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="agendamentoProfissional" class="form-label">Profissional</label>
+                        <select class="form-select" id="agendamentoProfissional"></select>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="agendamentoData" class="form-label">Data</label>
+                            <input type="date" class="form-control" id="agendamentoData">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="agendamentoHora" class="form-label">Hora</label>
+                            <input type="time" class="form-control" id="agendamentoHora" step="900">
+                        </div>
+                    </div>
+                    <small class="text-muted">A barbearia abre das 08:00 às 19:00.</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primaria">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="tituloModalExcluir" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -228,6 +278,7 @@
     <script src="js/clientes.js"></script>
     <script src="js/servicos.js"></script>
     <script src="js/profissionais.js"></script>
+    <script src="js/agendamentos.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

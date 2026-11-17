@@ -98,6 +98,14 @@ document.getElementById('formCliente').addEventListener('submit', (evento) => {
 });
 
 function excluirCliente(id) {
+    const temAgendamentoAberto = lerDados(CHAVE_AGENDAMENTOS).some(a =>
+        a.clienteId === id && agendamentoEmAberto(a)
+    );
+    if (temAgendamentoAberto) {
+        mostrarAviso('Este cliente tem agendamento em aberto. Conclua ou cancele antes.', 'erro');
+        return;
+    }
+
     confirmarExclusao('Deseja mesmo excluir este cliente?', () => {
         const clientes = lerDados(CHAVE_CLIENTES).filter(c => c.id !== id);
         salvarDados(CHAVE_CLIENTES, clientes);

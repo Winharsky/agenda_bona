@@ -24,6 +24,7 @@ function atualizarTela() {
     listarClientes();
     listarServicos();
     listarProfissionais();
+    listarAgendamentos();
 }
 
 atualizarTela();

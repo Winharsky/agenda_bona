@@ -57,6 +57,16 @@ function validarProfissional(profissional) {
         erros.push('Informe a especialidade.');
     }
 
+    const estaDesativando = !profissional.ativo && profissional.id !== '';
+    if (estaDesativando) {
+        const temAgendamentoAberto = lerDados(CHAVE_AGENDAMENTOS).some(a =>
+            a.profissionalId === profissional.id && agendamentoEmAberto(a)
+        );
+        if (temAgendamentoAberto) {
+            erros.push('Este profissional tem agendamento em aberto e não pode ser desativado.');
+        }
+    }
+
     return erros;
 }
 
@@ -92,6 +102,14 @@ document.getElementById('formProfissional').addEventListener('submit', (evento) 
 });
 
 function excluirProfissional(id) {
+    const temAgendamentoAberto = lerDados(CHAVE_AGENDAMENTOS).some(a =>
+        a.profissionalId === id && agendamentoEmAberto(a)
+    );
+    if (temAgendamentoAberto) {
+        mostrarAviso('Este profissional tem agendamento em aberto.', 'erro');
+        return;
+    }
+
     confirmarExclusao('Deseja mesmo excluir este profissional?', () => {
         const profissionais = lerDados(CHAVE_PROFISSIONAIS).filter(p => p.id !== id);
         salvarDados(CHAVE_PROFISSIONAIS, profissionais);

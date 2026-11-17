@@ -90,6 +90,14 @@ document.getElementById('formServico').addEventListener('submit', (evento) => {
 });
 
 function excluirServico(id) {
+    const emUso = lerDados(CHAVE_AGENDAMENTOS).some(a =>
+        a.servicoId === id && agendamentoEmAberto(a)
+    );
+    if (emUso) {
+        mostrarAviso('Este serviço está em um agendamento em aberto.', 'erro');
+        return;
+    }
+
     confirmarExclusao('Deseja mesmo excluir este serviço?', () => {
         const servicos = lerDados(CHAVE_SERVICOS).filter(s => s.id !== id);
         salvarDados(CHAVE_SERVICOS, servicos);
